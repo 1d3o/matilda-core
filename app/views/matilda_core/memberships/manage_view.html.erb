@@ -1,0 +1,106 @@
+<div class="c-section__content c-grid__container-spaced">
+  <div class="c-section__content-block c-grid__col c-grid__col--24 c-grid__col--md-14" id="matilda_core-memberships-manage_view-edit_permissions">
+    <% if MatildaCore.config.memberships_permissions_roles.length.positive? %>
+      <div class="c-card c-card--hasnext">
+        <div class="c-card__header">
+          <div class="c-card__header-title">
+            <%= I18n.t 'matilda_core.titles.edit_permissions_role' %>
+          </div>
+        </div>
+        <div class="c-card__body">
+          <%= form_tag matilda_core.memberships_edit_permissions_role_action_path(user_uuid: @user.uuid), method: :post, remote: true, data: { controller: 'form', action: 'ajax:success->form#validateResponse', 'form-reload': 'true' }, class: 'c-form c-grid__container-spaced' do %>
+            <div class="c-input c-grid__col c-grid__col--24">
+              <label class="c-input__label" for="role"><%= I18n.t 'matilda_core.labels.role' %></label>
+              <select class="c-input__field" name="role" id="role" autocomplete="off" data-target="form.field" required>
+                <option value=""><%= I18n.t 'matilda_core.strings.personalized' %></option>
+                <% MatildaCore.config.memberships_permissions_roles.each do |role| %>
+                  <option sele value="<%= role[:name] %>" <%= @membership.permissions_role == role[:name] ? 'selected' : '' %>><%= print_config_locale(role[:label]) %></option>
+                <% end %>
+              </select>
+            </div>
+
+            <div class="c-form__actions c-grid__col c-grid__col--24">
+              <button class="c-button" data-target="form.submit"><%= I18n.t 'matilda_core.cta.update' %></button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <% if MatildaCore.config.memberships_show_permissions_editor %>
+      <div class="c-card">
+        <div class="c-card__header">
+          <div class="c-card__header-title">
+            <%= I18n.t 'matilda_core.titles.edit_permissions' %>
+          </div>
+        </div>
+        <div class="c-card__body">
+          <%= form_tag matilda_core.memberships_edit_permissions_action_path(user_uuid: @user.uuid), method: :post, remote: true, data: { controller: 'form', action: 'ajax:success->form#validateResponse', 'form-reload': 'true' }, class: 'c-form c-grid__container-spaced' do %>
+            <% groups = MatildaCore.config.memberships_permissions.group_by { |mp| mp[:group] } %>
+            <% groups.each do |group, permissions| %>
+              <div class="c-form__title c-grid__col c-grid__col--24">
+                <%= print_config_locale(group) %>
+              </div>
+              
+              <% permissions = permissions.sort_by { |p| p[:index] } %>
+              <% permissions.each do |permission| %>
+                <div class="c-input-checkbox c-grid__col c-grid__col--24">
+                  <input type="checkbox" class="c-input-checkbox__field" name="permissions[]" id="permissions<%= permission[:name] %>" value="<%= permission[:name] %>" data-target="form.field" <%= @membership.permissions.include?(permission[:name]) ? 'checked' : '' %>>
+                  <label class="c-input-checkbox__label" for="permissions<%= permission[:name] %>"><%= print_config_locale(permission[:label]) %></label>
+                </div>
+              <% end %>
+            <% end %>
+
+            <div class="c-form__actions c-grid__col c-grid__col--24">
+              <button class="c-button" data-target="form.submit"><%= I18n.t 'matilda_core.cta.update' %></button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="c-section__content-block c-grid__col c-grid__col--24 c-grid__col--md-10">
+    <div class="c-card c-card--hasnext">
+      <div class="c-card__header">
+        <div class="c-card__header-title">
+          <%= I18n.t 'matilda_core.titles.informations' %>
+        </div>
+        <ul class="c-card__header-actions">
+          <li class="c-card__header-action">
+            <a
+              class="c-button c-button--orange"
+              href="<%= matilda_core.memberships_remove_action_path(user_uuid: @user.uuid) %>"
+              data-controller="link"
+              data-confirm="<%= I18n.t 'matilda_core.strings.action_confirmation_request' %>"
+              data-action="ajax:success->link#validateResponse"
+              data-method="post"
+              data-remote="true"
+              data-link-redirect="<%= matilda_core.memberships_index_view_path %>"
+            ><%= I18n.t 'matilda_core.cta.delete' %></a>
+          </li>
+        </ul>
+      </div>
+      <div class="c-card__body">
+        <table class="c-table">
+          <tbody>
+            <tr>
+              <td><%= I18n.t 'matilda_core.labels.username' %></td>
+              <th>@<%= @user.username %></th>
+            </tr>
+            <tr>
+              <td><%= I18n.t 'matilda_core.labels.email' %></td>
+              <th><%= @user.email %></th>
+            </tr>
+            <tr>
+              <td><%= I18n.t 'matilda_core.labels.registration_date' %></td>
+              <th><%= print_date(@membership.created_at) %></th>
+            </tr>
+            <tr>
+              <td><%= I18n.t 'matilda_core.labels.last_access_date' %></td>
+              <th><%= print_date(@user.user_sessions.order('created_at DESC').first&.created_at) %></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,74 @@
-<%= matilda_react_view('matilda_core') %>
+<form method="get">
+
+<div class="c-section__content c-grid__container-spaced">
+  <div class="c-section__content-block c-grid__col c-grid__col--24">
+    <div class="c-card">
+      <div class="c-card__header">
+        <div class="c-card__header-title">
+          <%= I18n.t 'matilda_core.titles.users_list' %>
+        </div>
+        <ul class="c-card__header-actions">
+          <li class="c-card__header-action">
+            <a class="c-button" href="<%= matilda_core.memberships_invitation_view_path %>"><%= I18n.t 'matilda_core.cta.invite' %></a>
+          </li>
+          <li class="c-card__header-action">
+            <div class="c-input-action">
+              <input class="c-input-action__field" name="s" placeholder="<%= I18n.t 'matilda_core.helps.search_something' %>" value="<%= params[:s] %>">
+              <button class="c-input-action__button" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="c-card__body">
+        <% if @users.length.positive? %>
+          <div class="c-table__responsive">
+            <table class="c-table">
+              <thead>
+                <tr>
+                  <th><%= I18n.t 'matilda_core.labels.name' %></th>
+                  <th class="c-table__col-not-imp"><%= I18n.t 'matilda_core.labels.username' %></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @users.each do |user| %>
+                  <tr>
+                    <td><%= user.complete_name %></td>
+                    <td class="c-table__col-not-imp">@<%= user.username %></td>
+                    <td class="c-table__actions">
+                      <a class="c-button" data-tippy-content="<%= I18n.t 'matilda_core.cta.manage' %>" data-controller="tippy" href="<%= matilda_core.memberships_manage_view_path(user_uuid: user.uuid) %>">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="c-pagination">
+            <%= paginate @users %>
+          </div>
+        <% else %>
+          <% if params[:s].blank? %>
+            <div class="c-message">
+              <div class="c-message__title"><%= I18n.t 'matilda_core.strings.no_data_found_title' %></div>
+              <div class="c-message__content c-message__content--small">
+                <%= I18n.t 'matilda_core.strings.no_data_found_content' %>.
+              </div>
+            </div>
+          <% else %>
+            <div class="c-message">
+              <div class="c-message__title"><%= I18n.t 'matilda_core.strings.no_result_found_title' %></div>
+              <div class="c-message__content c-message__content--small">
+                <%= I18n.t 'matilda_core.strings.no_result_found_content' %> "<%= params[:s] %>".
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+</form>

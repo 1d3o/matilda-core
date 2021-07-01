@@ -11,12 +11,12 @@ module MatildaCore
 
       payload_attributes_are :user_uuid, :name, :surname, :email, :log_who
 
-      extras_attributes_are :with_notification_invite, :username
+      extras_attributes_are :with_notification_invite
 
       to_write_event do
         set_not_saved unless save_event && MatildaCore::User.create(
           uuid: payload[:user_uuid],
-          username: extras[:username] || SecureRandom.uuid,
+          username: SecureRandom.uuid,
           name: payload[:name],
           surname: payload[:surname]
         )

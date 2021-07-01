@@ -1,0 +1,28 @@
+<% full ||= false %>
+
+<section class="c-section <%= full ? 'c-footer--full' : '' %>">
+
+  <% if @_section_head %>
+    <div class="c-section__head">
+      <% if @_section_head[:breadcrumbs].length > 1 %>
+      <a class="c-section__head-back" data-controller="back" data-action="click->back#goBack" href="#" style="display: none;">
+        <i class="fas fa-arrow-circle-left"></i>
+      </a>
+      <% end %>
+      <div class="c-section__head-content">
+        <h1 class="c-section__head-title"><%= @_section_head[:title] %></h1>
+        <div class="c-section__head-breadcrumb">
+          <% @_section_head[:breadcrumbs].each do |bread| %>
+            <% if bread[:url] %>
+              <a class="c-section__head-breadcrumb-link" href="<%= bread[:url] %>"><%= bread[:label] %></a>
+            <% else %>
+              <a class="c-section__head-breadcrumb-link"><%= bread[:label] %></a>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <%= yield %>
+</section>

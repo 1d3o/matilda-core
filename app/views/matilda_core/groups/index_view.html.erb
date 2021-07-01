@@ -1,1 +1,17 @@
-<%= matilda_react_view('matilda_core') %>
+<div class="c-section__content c-grid__container-spaced">
+  <% MatildaCore.config.sidebar_items.each do |item| %>
+    <% next if current_page?(item[:url]) %>
+    <% if !item[:permission] || @session.group_permissions.include?(item[:permission]) %>
+      <div class="c-section__content-block c-grid__col c-grid__col--6">
+        <a class="c-tile" href="<%= item[:url] %>">
+          <div class="c-tile__icon">
+            <i class="<%= item[:icon] %>"></i>
+          </div>
+          <div class="c-tile__label">
+            <%= print_config_locale(item[:label]) %>
+          </div>
+        </a>
+      </div>
+    <% end %>
+  <% end %>
+</div>

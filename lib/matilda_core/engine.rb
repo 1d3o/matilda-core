@@ -15,19 +15,26 @@ module MatildaCore
         'matilda_core.groups',
         label: 'locale.matilda_core.titles.dashboard',
         url: MatildaCore::Engine.routes.url_helpers.groups_index_view_path,
-        icon_legacy: 'fas fa-tachometer-alt',
-        icon: 'HomeOutlined',
+        icon: 'fas fa-tachometer-alt',
         index: 1000
       )
       MatildaCore.config.add_sidebar_item(
         'matilda_core.memberships',
         label: 'locale.matilda_core.titles.users',
         url: MatildaCore::Engine.routes.url_helpers.memberships_index_view_path,
-        icon_legacy: 'fas fa-users',
-        icon: 'UsergroupAddOutlined',
+        icon: 'fas fa-users',
         permission: 'matilda_core.memberships',
         index: 1100
       )
+      if Rails.env.development?
+        MatildaCore.config.add_sidebar_item(
+          'matilda_core.documentation',
+          label: 'locale.matilda_core.titles.documentation',
+          url: MatildaCore::Engine.routes.url_helpers.documentation_index_view_path,
+          icon: 'fas fa-code',
+          index: 999999
+        )
+      end
     end
 
     # Imposto i permessi degli utenti.

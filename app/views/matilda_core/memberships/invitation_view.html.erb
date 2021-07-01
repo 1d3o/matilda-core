@@ -1,0 +1,36 @@
+<div class="c-section__content c-grid__container-spaced">
+  <div class="c-section__content-block c-grid__col c-grid__col--24">
+    <div class="c-card">
+      <div class="c-card__header">
+        <div class="c-card__header-title">
+          <%= I18n.t 'matilda_core.titles.invite_user' %>
+        </div>
+        <ul class="c-card__header-actions">
+          <li class="c-card__header-action">
+            <a class="c-button c-button--black" href="<%= matilda_core.memberships_index_view_path %>"><%= I18n.t 'matilda_core.cta.back' %></a>
+          </li>
+        </ul>
+      </div>
+      <div class="c-card__body">
+        <%= form_tag matilda_core.memberships_invitation_action_path, method: :post, remote: true, data: { controller: 'form', action: 'ajax:success->form#validateResponse', 'form-redirect': matilda_core.memberships_index_view_path }, class: 'c-form c-grid__container-spaced' do %>
+          <div class="c-input c-grid__col c-grid__col--24 c-grid__col--md-12">
+            <label class="c-input__label" for="name"><%= I18n.t 'matilda_core.labels.name' %></label>
+            <input class="c-input__field" type="text" name="name" id="name" autocomplete="off" data-target="form.field" required>
+          </div>
+          <div class="c-input c-grid__col c-grid__col--24 c-grid__col--md-12">
+            <label class="c-input__label" for="surname"><%= I18n.t 'matilda_core.labels.surname' %></label>
+            <input class="c-input__field" type="text" name="surname" id="surname" autocomplete="off" data-target="form.field" required>
+          </div>
+          <div class="c-input c-grid__col c-grid__col--24">
+            <label class="c-input__label" for="email"><%= I18n.t 'matilda_core.labels.email' %></label>
+            <input class="c-input__field" type="email" name="email" id="email" autocomplete="off" data-target="form.field" required>
+          </div>
+
+          <div class="c-form__actions c-grid__col c-grid__col--24">
+            <button class="c-button" data-target="form.submit"><%= I18n.t 'matilda_core.cta.invite' %></button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

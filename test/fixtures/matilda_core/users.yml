@@ -1,0 +1,48 @@
+general:
+  uuid: general
+  username: general
+  name: nome
+  surname: cognome
+  password: <%= BCrypt::Password.create('Password1!') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+# COMMANDS
+###########################################################################
+
+authentication_update_password_command_1:
+  uuid: authentication_update_password_command_1
+  username: authentication_update_password_command_1
+  name: nome
+  surname: cognome
+  password: <%= BCrypt::Password.create('Password1!') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+  recover_password_code: '123456'
+  recover_password_code_time: <%= Time.now %>
+
+memberships__edit_member_permissions_command_1:
+  uuid: memberships__edit_member_permissions_command_1
+  username: memberships__edit_member_permissions_command_1
+  name: nome
+  surname: cognome
+  password: <%= BCrypt::Password.create('Password1!') %>
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+  recover_password_code: '123456'
+  recover_password_code_time: <%= Time.now %>
+
+# EVENTS
+###########################################################################
+
+users_edit_recover_password_code_event_1:
+  uuid: users_edit_recover_password_code_event_1
+  username: users_edit_recover_password_code_event_1
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+users_edit_password_event_1:
+  uuid: users_edit_password_event_1
+  username: users_edit_password_event_1
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

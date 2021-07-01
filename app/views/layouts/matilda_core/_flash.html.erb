@@ -1,0 +1,8 @@
+<div class="c-flash" data-controller="flash" id="flash">
+  <% flash.each do |key, msg| %>
+    <div class="c-flash__message c-flash__message--<%= key %>" data-target="flash.message">
+      <span class="c-flash__message-close" data-action="click->flash#close"></span>
+      <%= msg %>
+    </div>
+  <% end %>
+</div>

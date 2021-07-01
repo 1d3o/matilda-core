@@ -8,7 +8,12 @@ module MatildaCore
     attr_accessor :data
 
     def initialize(data = nil)
-      return set(data) if data
+      if data
+        data_parsed = JSON.parse(data).with_indifferent_access
+        @data = validate_data(data_parsed)
+        return
+      end
+
       @data = initialize_data
     end
 
@@ -22,13 +27,6 @@ module MatildaCore
 
     def reset
       @data = initialize_data
-    end
-
-    def set(data = nil)
-      return unless data
-
-      data_parsed = JSON.parse(data).with_indifferent_access
-      @data = validate_data(data_parsed)
     end
 
     # Funzioni principali di gestione dei dati

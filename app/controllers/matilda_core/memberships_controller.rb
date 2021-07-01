@@ -11,47 +11,27 @@ module MatildaCore
       end
     end
 
-    def index_view; end
+    def index_view
+      sidebar_set('matilda_core.memberships')
+      section_head_set(I18n.t('matilda_core.titles.users'), [{ label: I18n.t('matilda_core.titles.users') }])
 
-    # def manage_view
-    #   @user = @session.group.users.find_by(uuid: params[:user_uuid])
-    #   @membership = @session.group.memberships.find_by(user_uuid: params[:user_uuid])
-    # end
-
-    def index_api
-      page = params[:page]&.to_i || 1
-      per_page = params[:per_page]&.to_i || 15
-      sort_field = params[:sort_field] || 'username'
-      sort_order = params[:sort_order] || 'ASC'
-
-      users = @session.group.users.left_joins(:user_emails)
-      users = users.where('lower(name) LIKE ? OR lower(surname) LIKE ?', "%#{params[:s].downcase}%", "%#{params[:s].downcase}%") unless params[:s].blank?
-      
-      users = search_query(users, %w(name surname username))
-      users = sort_query(users, username: 'username SORT', name: 'name SORT', surname: 'surname SORT', email: 'matilda_core_user_emails.email SORT')
-      users = paginate_query(users)
-
-      render_json_success(
-        users: users.map(&:as_json_with_email),
-        params: params_for_query(users)
-      )
+      @users = @session.group.users
+      @users = @users.where('lower(name) LIKE ? OR lower(surname) LIKE ?', "%#{params[:s].downcase}%", "%#{params[:s].downcase}%") unless params[:s].blank?
+      @users = @users.order('surname ASC, name ASC').page(params[:page]).per(15)
     end
 
-    # def manage_api
-    #   user_uuid = params[:user_uuid]
+    def invitation_view
+      sidebar_set('matilda_core.memberships')
+      section_head_set(I18n.t('matilda_core.titles.invite_user'), [{ label: I18n.t('matilda_core.titles.users'), url: matilda_core.memberships_index_view_path }, { label: I18n.t('matilda_core.titles.invite_user') }])
+    end
 
-    #   user = @session.group.users.find_by(uuid: user_uuid)
-    #   unless user
-    #     json_errors(json_error(I18n.t('matilda_core.messages.user_not_valid'), code: :user_uuid))
-    #     render_json_fail
-    #     return
-    #   end
+    def manage_view
+      @user = @session.group.users.find_by(uuid: params[:user_uuid])
+      @membership = @session.group.memberships.find_by(user_uuid: params[:user_uuid])
 
-    #   render_json_success(
-    #     user: user.as_json_with_email,
-    #     user_emails: user.user_emails
-    #   )
-    # end
+      sidebar_set('matilda_core.memberships')
+      section_head_set(@user.complete_name, [{ label: I18n.t('matilda_core.titles.users'), url: matilda_core.memberships_index_view_path }, { label: I18n.t('matilda_core.titles.manage_user') }])
+    end
 
     def invitation_action
       command = command_manager(generate_invitation_command)
@@ -60,28 +40,28 @@ module MatildaCore
       render_json_success({})
     end
 
-    # def edit_permissions_action
-    #   command = command_manager(generate_edit_permissions_command)
-    #   return unless command
+    def edit_permissions_action
+      command = command_manager(generate_edit_permissions_command)
+      return unless command
 
-    #   session_update_group(@session.group_uuid) # aggiorno la sessione per aggiornare i permessi dell'utente
-    #   render_json_success({})
-    # end
+      session_update_group(@session.group_uuid) # aggiorno la sessione per aggiornare i permessi dell'utente
+      render_json_success({})
+    end
 
-    # def edit_permissions_role_action
-    #   command = command_manager(generate_edit_permissions_role_command)
-    #   return unless command
+    def edit_permissions_role_action
+      command = command_manager(generate_edit_permissions_role_command)
+      return unless command
 
-    #   session_update_group(@session.group_uuid) # aggiorno la sessione per aggiornare i permessi dell'utente
-    #   render_json_success({})
-    # end
+      session_update_group(@session.group_uuid) # aggiorno la sessione per aggiornare i permessi dell'utente
+      render_json_success({})
+    end
 
-    # def remove_action
-    #   command = command_manager(generate_remove_command)
-    #   return unless command
+    def remove_action
+      command = command_manager(generate_remove_command)
+      return unless command
 
-    #   render_json_success({})
-    # end
+      render_json_success({})
+    end
 
     private
 

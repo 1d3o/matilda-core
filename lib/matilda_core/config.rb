@@ -19,16 +19,13 @@ module MatildaCore
     # Imposta la versione dell'applicativo.
     attr_accessor :global_version
 
-    # Imposta la descrizione testuale per il footer.
-    attr_accessor :global_footer
-
     # TEMPLATE
 
     # Sovrascrive il contenuto del head.
     attr_accessor :template_head
 
     # Sovrascrive il contenuto del footer.
-    attr_accessor :template_foot
+    attr_accessor :template_footer
 
     # MAILER
 
@@ -111,21 +108,16 @@ module MatildaCore
     # file CSV nel caso di :csv_file_path.
     attr_accessor :locales_source_value
 
-    # OTHER NOT EDITABLE DIRECTLY
-
-    attr_reader :react_props
-
     def initialize
       set_default_options
     end
 
     def set_default_options
-      @global_title = 'Matilda Core'
+      @global_title = 'Matilda'
       @global_logo = nil
       @global_date_format = '%d-%m-%Y'
       @global_version = MatildaCore::VERSION
-      @global_footer = "© #{@global_title} #{Date.today.year} - Version: #{@global_version}"
-      @template_foot = nil
+      @template_footer = nil
       @template_head = nil
       @mailer_from_address = 'Matilda <matilda@1d3o.it>'
       @authentication_session_lifetime = false
@@ -150,7 +142,7 @@ module MatildaCore
     end
 
     # Permette di aggiungere una nuova voce di menu alla sidebar.
-    def add_sidebar_item(name, label: '', url: '', icon: '', icon_legacy: '', permission: nil, index: 0)
+    def add_sidebar_item(name, label: '', url: '', icon: '', permission: nil, index: 0)
       names = @sidebar_items.map { |i| i[:name] }
       throw 'Name already used' if names.include?(name)
 
@@ -159,7 +151,6 @@ module MatildaCore
         label: label,
         url: url,
         icon: icon,
-        icon_legacy: icon_legacy,
         permission: permission,
         index: index
       )
@@ -199,6 +190,7 @@ module MatildaCore
         index: index
       )
     end
+
 
   end
 

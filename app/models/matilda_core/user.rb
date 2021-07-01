@@ -24,16 +24,10 @@ module MatildaCore
     end
 
     # Ritorna un hash con i dati dell'utente serializzati per l'autenticazione.
-    def as_json_with_email
+    def serialize_authentication
       data = as_json
-      data[:email] = email
-      data
-    end
-
-    def as_json
-      data = super
       data[:password] = 'FILTERED'
-      data[:recover_password_code] = 'FILTERED'
+      data[:email] = email
       data
     end
 

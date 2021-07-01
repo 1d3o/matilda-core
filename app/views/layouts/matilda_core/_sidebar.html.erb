@@ -1,0 +1,15 @@
+<% if @session&.group_uuid %>
+<aside class="c-sidebar">
+  <ul class="c-sidebar__list">
+    <% MatildaCore.config.sidebar_items.each do |item| %>
+      <% if !item[:permission] || @session.group_permissions.include?(item[:permission]) %>
+        <li class="c-sidebar__list-item" <%= @_sidebar == item[:name] ? 'data-active' : '' %>>
+          <a href="<%= item[:url] %>" class="c-sidebar__list-link" title="<%= print_config_locale(item[:label]) %>">
+            <i class="<%= item[:icon] %>"></i> <span><%= print_config_locale(item[:label]) %></span>
+          </a>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</aside>
+<% end %>

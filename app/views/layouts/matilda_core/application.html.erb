@@ -1,10 +1,13 @@
-<%= render 'layouts/matilda_core/head',
-  assets: [
-    stylesheet_pack_tag('matilda'),
-    javascript_pack_tag('matilda')
-  ]
-%>
+<%= render 'layouts/matilda_core/head' %>
 
-<%= yield %>
+<%= render 'layouts/matilda_core/flash' %>
+
+<%= render 'layouts/matilda_core/header' %>
+
+<%= render 'layouts/matilda_core/sidebar' %>
+    
+<%= render 'layouts/matilda_core/section', full: !@session&.group_uuid %>
+
+<%= render 'layouts/matilda_core/footer', full: !@session&.group_uuid %>
 
 <%= render 'layouts/matilda_core/foot' %>

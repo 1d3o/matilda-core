@@ -7,6 +7,10 @@ module MatildaCore
 
     before_action :session_present_check
 
+    def index_view
+      section_head_set(@session.user.complete_name, [{ label: I18n.t('matilda_core.titles.account_settings') }])
+    end
+
     def edit_info_action
       command = command_manager(generate_edit_info_command)
       return unless command

@@ -1,0 +1,11 @@
+<% full ||= false %>
+
+<footer class="c-footer <%= full ? 'c-footer--full' : '' %>">
+  <div class="c-footer__content">
+    <% if MatildaCore.config.template_footer %>
+      <%= raw MatildaCore.config.template_footer %>
+    <% else %>
+      &copy; 2020 - <%= I18n.t 'matilda_core.footer.produced_by' %> <a href="#">1d3o</a> | <%= I18n.t 'matilda_core.footer.version' %> <%= MatildaCore.config.global_version %>
+    <% end %>
+  </div>
+</footer>

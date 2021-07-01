@@ -1,0 +1,13 @@
+general:
+  email: 'general@mail.com'
+  user_uuid: general
+  primary: true
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+general_2:
+  email: 'general_2@mail.com'
+  user_uuid: general
+  primary: false
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

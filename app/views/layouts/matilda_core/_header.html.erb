@@ -1,0 +1,76 @@
+<header class="c-header" data-controller="header">
+  <a href="<%= matilda_core.root_path %>" class="c-header__logo">
+    <% if MatildaCore.config.global_logo %>
+      <img class="c-header__logo-img" src="<%= MatildaCore.config.global_logo %>" alt="<%= MatildaCore.config.global_title %>" />
+    <% else %>
+      <span class="c-header__logo-title"><%= MatildaCore.config.groups_show_name_on_header && @session&.group_uuid ? @session.group.name : MatildaCore.config.global_title %></span>
+    <% end %>
+  </a>
+
+  <nav class="c-header__nav">
+    <% if @session %>
+      <div class="c-header__nav-item">
+        <button class="c-header__nav-item-action" data-action="click->header#toggleProfile" title="<%= I18n.t 'matilda_core.header.profile' %>">
+          <i class="fas fa-user"></i>
+        </button>
+
+        <div class="c-header__nav-menu" data-target="header.profileMenu">
+          <ul class="c-header__nav-menu-list">
+            <li class="c-header__nav-menu-list-item">
+              <a class="c-header__nav-menu-list-item-link" data-controller="link" data-action="ajax:success->link#validateResponse" data-method="post" data-remote="true" data-link-redirect="<%= matilda_core.profile_index_view_path %>" href="<%= matilda_core.groups_unselect_action_path %>">
+                <%= I18n.t 'matilda_core.header.account_settings' %>
+              </a>
+            </li>
+            <li class="c-header__nav-menu-list-item">
+              <a class="c-header__nav-menu-list-item-link" data-controller="link" data-action="ajax:success->link#validateResponse" data-method="post" data-remote="true" data-link-redirect="<%= matilda_core.groups_select_view_path %>" href="<%= matilda_core.groups_unselect_action_path %>">
+                <%= I18n.t 'matilda_core.header.groups' %>
+              </a>
+            </li>
+            <li class="c-header__nav-menu-list-item">
+              <a class="c-header__nav-menu-list-item-link" data-controller="link" data-action="ajax:success->link#validateResponse" data-method="post" data-remote="true" data-link-redirect="<%= matilda_core.authentication_login_view_path %>" href="<%= matilda_core.authentication_logout_action_path %>">
+                <%= I18n.t 'matilda_core.header.logout' %>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
+    <% if I18n.available_locales.length > 1 %>
+      <div class="c-header__nav-item">
+        <button class="c-header__nav-item-action" data-action="click->header#toggleLang" title="<%= I18n.t 'matilda_core.header.lang' %>">
+          <i class="fas fa-flag"></i>
+        </button>
+
+        <div class="c-header__nav-menu c-header__nav-menu--locales" data-target="header.langMenu">
+          <% I18n.available_locales.each do |locale| %>
+            <a
+              class="c-header__nav-menu-locale <%= locale === I18n.locale ? 'c-header__nav-menu-locale--active' : '' %>"
+              href="<%= matilda_core.helper_update_session_locale_path(locale: locale) %>"
+              data-controller="link"
+              data-action="ajax:success->link#validateResponse"
+              data-method="post"
+              data-remote="true"
+              data-link-reload="true"
+            >
+              <% if [:it, :en, :us, :de, :es, :fr, :ru].include?(locale) %>
+                <img src="<%= asset_pack_path("media/locales/_#{locale}.png") %>" />
+              <% else %>
+                <span><%= locale %></span>
+              <% end %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @session %>
+      <div class="c-header__nav-item">
+        <button class="c-header__nav-item-action" data-target="header.toggleMenu" data-action="click->header#toggleMenu" data-url="<%= matilda_core.helper_update_menu_preference_path %>" title="menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    <% end %>
+  </nav>
+
+</header>
