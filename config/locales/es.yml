@@ -1,4 +1,4 @@
-en:
+es:
   views:
     pagination:
       next: Next
@@ -18,22 +18,22 @@ en:
       version: Version
     cta:
       cancel: Cancel
-      confirm: Confirm
-      manage: Manage
+      confirm: Confirmar
+      manage: Administrar
       back: Back
       invite: Invite
-      create: Create
-      update: Update
-      edit: Edit
+      create: Crear
+      update: Actualizar
+      edit: Editar
       signup: Signup
       recover_password: Recover password
       login: Login
-      continue: Continue
-      add: Add new
-      delete: Delete
+      continue: Continuar
+      add: Crear
+      delete: Borrar
       set_primary: Set as primary
     labels:
-      name: Name
+      name: Nombre
       surname: Surname
       username: Username
       email: Email address
@@ -50,8 +50,8 @@ en:
     titles:
       select_a_group: Select a group
       create_a_group: Create a group
-      users: Users
-      users_list: Users list
+      users: Usuarios
+      users_list: Lista de usuarios
       invite_user: Invite user
       manage_user: Manage user
       edit_permissions: Edit permissions
@@ -77,7 +77,7 @@ en:
       insert_new_password: Insert the new password
       insert_new_password_confirmation: Insert the new password to confirm
       insert_email: Insert an email address
-      search_something: Search something
+      search_something: Buscar algo
     messages:
       general_error: There was an internal error
       name_not_valid: Name not valid
