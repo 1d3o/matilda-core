@@ -104,6 +104,16 @@ module MatildaCore
       @membership ||= MatildaCore::Membership.find_by(group_uuid: group_uuid, user_uuid: user_uuid)
     end
 
+    # Custom
+
+    def set(key, value)
+      @data[key] = value
+    end
+
+    def get(key)
+      @data[key]
+    end
+
     ######################################################################
 
     protected
