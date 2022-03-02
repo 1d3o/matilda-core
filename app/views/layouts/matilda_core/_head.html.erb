@@ -19,8 +19,8 @@
   <% end %>
 
   <!-- Assets -->
-  <%= stylesheet_pack_tag 'matilda' %>
-  <%= javascript_pack_tag 'matilda' %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= javascript_tag 'application' %>
 </head>
 <body class="<%= session[:mat_menupreference] ? '' : 'is-menu-closed' %> controller-<%= controller_name %>">
 <!--<div class="loader"></div>-->

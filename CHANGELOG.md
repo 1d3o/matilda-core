@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+- Aggiornata compatibilità con Rails 7.0.
+
 ## 0.3.1
 
 - Ottimizzazione UI breadcrumb.

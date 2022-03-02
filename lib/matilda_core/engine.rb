@@ -57,6 +57,12 @@ module MatildaCore
       )
     end
 
+    # Setup handlers
+    config.after_initialize do
+      MatildaCore::NotificationsHandler.listen(MatildaCore::Users::InviteEvent)
+      MatildaCore::NotificationsHandler.listen(MatildaCore::Users::EditRecoverPasswordCodeEvent)
+    end
+
   end
 
 end
