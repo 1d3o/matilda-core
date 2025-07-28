@@ -28,6 +28,8 @@ module MatildaCore
           break
         end
 
+        Rails.logger.info "RecoverPasswordCommand: params[:username_email] = #{user.uuid}"
+
         @user_uuid = user.uuid
       end
 
